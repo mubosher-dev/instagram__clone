@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400&display=swap');
+
+*{
+  font-family: "Dasics",sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition:3s all ease-in;
+}
+
+body{
+  background-color: #fafafa;
+}
+
+.app{
+  background-color: #fafafa;
+  height: 100%;
+}
