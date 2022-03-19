@@ -80,7 +80,7 @@ const Wrapper = styled.div`
         flex-wrap: wrap;
 
         .postCaption{
-            width:100%;
+            width:99%;
         }
         .postCaption:nth-child(3){
             border:1px solid lightgray !important;
