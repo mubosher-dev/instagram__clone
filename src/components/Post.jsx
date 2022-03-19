@@ -22,7 +22,7 @@ function Post({ userName, avatarImg, postImg, postCaption, id, username }) {
         else {
             db.collection("instagram").doc(id).collection("massage").add({
                 massage: post,
-                username: "mubosher",
+                username: username.displayName,
             })
             setPosts("");
         }
@@ -55,14 +55,16 @@ function Post({ userName, avatarImg, postImg, postCaption, id, username }) {
             </PostHeader>
 
             <PostImg src={postImg} alt="Logo" />
-            <PostCaption>
-                {userName} : <PostStrong> {postCaption} </PostStrong>
-            </PostCaption>
-            {comment.map((comment, index) => (
-                <PostCaption key={index}>
-                    {comment.username}  : <PostStrong> {comment.massage} </PostStrong>
+            <PostComment>
+                <PostCaption>
+                    {userName} : <PostStrong> {postCaption} </PostStrong>
                 </PostCaption>
-            ))}
+                {comment.map((comment, index) => (
+                    <PostCaption key={index}>
+                        {comment.username}  : <PostStrong> {comment.massage} </PostStrong>
+                    </PostCaption>
+                ))}
+            </PostComment>
 
             <PostEmoji show={emoji} >
                 <SentimentSatisfiedAltIcon className="icon__modal" />
@@ -81,19 +83,25 @@ function Post({ userName, avatarImg, postImg, postCaption, id, username }) {
             </PostEmoji>
 
             <PostFooter>
-                <SentimentSatisfiedAltIcon
-                    onClick={emojiType}
-                    className="smile__icon" />
-                <input type="text"
-                    placeholder='write comments'
-                    onChange={e => setPosts(e.target.value)}
-                    value={post} />
-                <Button
-                    className="comment__btn"
-                    onClick={comments}
-                >
-                    Comment
-                </Button>
+                {username?.displayName ? (
+                    <>
+                        <SentimentSatisfiedAltIcon
+                            onClick={emojiType}
+                            className="smile__icon" />
+                        <input type="text"
+                            placeholder='write comments'
+                            onChange={e => setPosts(e.target.value)}
+                            value={post} />
+                        <Button
+                            className="comment__btn"
+                            onClick={comments}
+                        >
+                            Comment
+                        </Button>
+                    </>
+                ) : (
+                    <h3 style={{ color: "red" }}> Sorry please Login or Sign up </h3>
+                )}
             </PostFooter>
         </PostWrapper>
     )
@@ -117,6 +125,15 @@ const PostHeader = styled.div`
     padding: 20px;
 `;
 
+const PostComment = styled.div`
+    height:100px;
+    overflow-y: scroll;
+
+    ::-webkit-scrollbar{
+        display: none !important;
+    }
+`;
+
 const PostEmoji = styled.div`
     width:200px;
     height: 50px;
@@ -137,6 +154,10 @@ const PostFooter = styled.div`
     align-items:center;
     justify-content:center;
     border-top: 1px solid lightgray;
+    h3 {
+        margin:10px 0;
+        font-size: 18px;
+    }
 
     input{
         width:80%;
