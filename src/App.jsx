@@ -75,7 +75,6 @@ function App() {
   useEffect(() => {
     const subscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
-        console.log(authUser);
         setUser(authUser);
         if (authUser.displayName) {
 
@@ -109,14 +108,12 @@ function App() {
       })
   }, [])
 
-  console.log(posts)
 
   const logIn = () => {
     setOpenSignIn(true);
     setOpen(true)
   }
 
-  console.log(posts)
 
   return (
     <div className="app">
@@ -167,7 +164,7 @@ function App() {
           ))}
         </AppLeft>
         <AppRight>
-          <Sidebar />
+          <Sidebar username={user} />
         </AppRight>
       </AppBody>
 
@@ -222,7 +219,7 @@ function App() {
         <ImgUpload username={user.displayName} />
       ) :
         (
-          <h3>Sorry you need to login upload</h3>
+          <></>
         )
       }
     </div>
@@ -287,6 +284,11 @@ const AppBody = styled.div`
 
   ::-webkit-scrollbar{
     display: none !important;
+  }
+
+  @media (max-width:768px){
+    margin-top: 80px !important;
+    margin: 50px;
   }
 
   @media screen and (max-width:550px){
